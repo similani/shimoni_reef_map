@@ -1,5 +1,7 @@
 ---
 #Hamadi, can you accept this test comment?
+#Test 2
+#Test 3
 title: "REEFo_map"
 author: "Hamadi Mwamlavya"
 date: "15 April 2020"
