@@ -1,7 +1,4 @@
 ---
-#Hamadi, can you accept this test comment?
-#Test 2
-#Test 3
 title: "REEFo_map"
 author: "Hamadi Mwamlavya"
 date: "15 April 2020"
@@ -117,7 +114,7 @@ bbar <- ggplot(urchins.1, aes("", density))+
   
 #make the image strip
 bimage <- axis_canvas(bbar, axis = 'x') + 
-  draw_image("C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/reefOLUTION/urchin.png",
+  draw_image("urchin.png",
              x = 0.5, scale = 4, vjust = 1.5)
   
 
@@ -158,7 +155,7 @@ urchin.guide <- ggplot(urchins.2, aes("", density))+
   
 # make the image strip
 uimage <- axis_canvas(urchin.guide, axis = 'x') + 
-  draw_image("C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/reefOLUTION/urchin.png",
+  draw_image("urchin.png",
              x = 0.5, scale = 4, vjust = 1.5)
   
 # insert the image strip into the bar plot and draw  
@@ -194,7 +191,7 @@ cbar <- ggplot(fishes.1, aes("", biomass))+
   
 # make the image strip
 cimage <- axis_canvas(cbar, axis = 'x') + 
-  draw_image("C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/reefOLUTION/fish.png", 
+  draw_image("fish.png", 
              x = 0.4, scale = 1.9, vjust = 1.5)
   
 
@@ -235,7 +232,7 @@ fish.guide <- ggplot(fishes.2, aes("", biomass))+
 
 # make the image strip
 fimage <- axis_canvas(fish.guide, axis = 'x') +
-  draw_image("C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/reefOLUTION/fish.png", 
+  draw_image("fish.png", 
              x = 0.4, scale = 1.9, vjust = 1.5)
   
 # insert the image strip into the bar plot and draw  
@@ -295,12 +292,12 @@ shim.town <- data.frame(
 
 #shapefiles to build main map
 
-reef <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/Coral_reefs",layer = "ke_coral_reefs")
+reef <- st_read(dsn = "Coral_reefs",layer = "ke_coral_reefs")
 
-kisite <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/Kisite-Mpunguti_MPA",layer = "Kisite-Mpunguti_MPA")
+kisite <- st_read(dsn = "Kisite-Mpunguti_MPA",layer = "Kisite-Mpunguti_MPA")
 kisite <- st_transform(kisite,"+proj=longlat +datum=WGS84")
 
-ke.county <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/District_boundaries",layer = "ke_district_boundaries")
+ke.county <- st_read(dsn = "District_boundaries",layer = "ke_district_boundaries")
 
 ke.country <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/KEN_outline_SHP",layer = "KEN_outline")
 ke.country <- st_set_crs(ke.country,"+proj=longlat +datum=WGS84")
