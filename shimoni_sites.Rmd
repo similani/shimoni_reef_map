@@ -12,7 +12,8 @@ library(magrittr)
 library(ggpubr)
 library(cowplot) 
 library(sf) 
-library(ggspatial)  
+library(ggspatial)
+library(ggpattern)
 knitr::opts_chunk$set(echo = FALSE,message = FALSE,warning = FALSE, results = TRUE,include = TRUE, dpi=300, fig.width=1.5, fig.height=3)
 ```
 ## 1.Creating all the subplots to be included/appended on the main map
@@ -27,6 +28,12 @@ data <- gather(benthic, substrate, cover, Hard.coral:Other)
 labels <- c("Hard.coral", "Soft.coral", "Turf.algae", "Macroalgae", "Other") #results in the pie chart to appear in this order
 
 #Create a function to build piecharts to summarize data for 6 locations/sites
+pct_pattern <- c("circle", "circle", "stripe", "crosshatch", "")
+pct_angle <- c(0,0,0,0,0)
+pct_fill <- c('#dddddd')
+pct_spacing <- c(0.07,0.03,0.04,0.03, 0.3)
+pct_density <- c(0.4, 0.4,0.3,0.3, 0.3)
+pct_pattern_fill <- c('red', 'orange', 'blue', 'green', 'white')
 
 piechart <- function(x){
 data.1 <- data %>% 
@@ -35,18 +42,27 @@ data.1 <- data %>%
   summarize(cover=mean(cover), samples=n()) %>%
   mutate(substrate = factor(substrate, levels = labels)) %>% 
   arrange(substrate)
-  
-ggplot(data = data.1, mapping = aes(x="", y=cover, fill=substrate)) +
-  geom_bar(stat="identity", width=1) + 
-  coord_polar("y",start = 0, direction = -1) +
-  scale_fill_manual(values = c("#FF6600", "#FFFF66", "#66FF66", "#006600",
-                               "#C4E7E8")) +
-  theme_void(base_size = 2,base_family = 'serif') +
-  theme(legend.position = "none")
+
+ggplot(data = data.1, mapping = aes(x="", y=cover)) +
+    geom_bar_pattern(
+      stat                 = "identity",
+      colour               = 'black', 
+      size                 = 1,
+      pattern              = pct_pattern,
+      pattern_angle        = pct_angle,
+      fill                 = pct_fill,
+      pattern_colour       = 'black',
+      pattern_fill         = 'black',
+      pattern_aspect_ratio = 1,
+      pattern_density      = pct_density,
+      pattern_spacing      = pct_spacing
+   )+
+   coord_polar("y", start = 0, direction = 1) +
+   theme_void(base_size = 2,base_family = 'serif') +
+   theme(legend.position = "none") 
 }
 
 #I need 6 objects to append to the two bar plots on fish biomass and urchin density
-
 a.1 <- piechart(data$Location==1)
 a.2 <- piechart(data$Location==2)
 a.3 <- piechart(data$Location==3)
@@ -63,14 +79,25 @@ data.2 <- data %>%
   summarize(cover=mean(cover), samples=n()) %>%
   mutate(substrate = factor(substrate, levels = labels)) %>% 
   arrange(substrate)
-guide.plot <- ggplot(data = data.2, mapping = aes(x="", y=cover, fill=substrate)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y",start = 0, direction = -1) + 
-  scale_fill_manual(values = c("#FF6600", "#FFFF66", "#66FF66", "#006600",
-                               "#C4E7E8"))+
-  labs(fill="Substrate")+
-  theme_void(base_size = 2,base_family = 'serif') + 
-  theme(panel.grid = element_blank(),
+
+guide.plot <- ggplot(data = data.2, mapping = aes(x="", y=cover)) +
+    geom_bar_pattern(
+      stat                 = "identity",
+      colour               = 'black', 
+      size                 = 1,
+      pattern              = pct_pattern,
+      pattern_angle        = pct_angle,
+      fill                 = pct_fill,
+      pattern_colour       = 'black',
+      pattern_fill         = 'black',
+      pattern_aspect_ratio = 1,
+      pattern_density      = pct_density,
+      pattern_spacing      = pct_spacing
+   )+
+   labs(fill="Substrate")+
+   coord_polar("y", start = 0, direction = 1) +
+   theme_void(base_size = 2,base_family = 'serif') + 
+   theme(panel.grid = element_blank(),
         panel.border = element_rect(fill = NA, colour = "black"),
         legend.box.background = element_blank(),
         legend.text = element_text(size = 10.5),
@@ -299,10 +326,10 @@ kisite <- st_transform(kisite,"+proj=longlat +datum=WGS84")
 
 ke.county <- st_read(dsn = "District_boundaries",layer = "ke_district_boundaries")
 
-ke.country <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/KEN_outline_SHP",layer = "KEN_outline")
+ke.country <- st_read(dsn = "KEN_outline_SHP",layer = "KEN_outline")
 ke.country <- st_set_crs(ke.country,"+proj=longlat +datum=WGS84")
 
-wasini_cca <- st_read(dsn = "C:/Users/Hamadi.Mwamlavya/Dropbox/work.stuff/GIS/Kenya/Wasini_CCA", layer = "Wasini_cca")
+wasini_cca <- st_read(dsn = "Wasini_CCA", layer = "Wasini_cca")
 
 #inset
 kenya <- ggplot() + 
