@@ -119,7 +119,7 @@ urchins.1 <- urchins %>%
 
 bbar <- ggplot(urchins.1, aes("", density))+
   geom_bar(stat="identity", width=1, fill="black") + 
-  geom_errorbar(aes(ymin=density-0.1, ymax=density+sd), width=.1) +
+  geom_errorbar(aes(ymin=density-0.1, ymax=density+2*se), width=.1) +
   scale_y_continuous(breaks = c(0,1,2), limits = c(0, 2)) +
   scale_x_discrete(expand = c(0.3, 0.3))+
   labs(title = "", x = "", y = "") +
@@ -160,7 +160,7 @@ urchins.2 <- urchins %>%
 
 urchin.guide <- ggplot(urchins.2, aes("", density))+
   geom_bar(stat="identity", width = 1, fill="black")+ #plot a bar chart
-  geom_errorbar(aes(ymin=density-0.1, ymax=density+sd), width=.1)+
+  geom_errorbar(aes(ymin=density-0.1, ymax=density+2*se), width=.1)+
   scale_y_continuous(breaks = c(0, 1, 2), limits = c(0, 2)) + 
   scale_x_discrete(expand = c(0.28, 0.28)) +
   labs(title = "Urchin/m2", x = "", y = "") +
@@ -197,7 +197,7 @@ fishes.1 <- fishes %>%
 
 cbar <- ggplot(fishes.1, aes("", biomass))+
   geom_bar(stat = "identity", width = 1, fill = "black")+ #plot a bar chart
-  geom_errorbar(aes(ymin = biomass - 30, ymax = biomass+sd), width = .1)+  
+  geom_errorbar(aes(ymin = biomass - 30, ymax = biomass+2*se), width = .1)+  
   scale_y_continuous(breaks = c(0, 1000, 2000), limits = c(0,2000))+
   scale_x_discrete(expand = c(0.3, 0.3)) +
   labs(title = "", x = "", y = "")+
@@ -239,7 +239,7 @@ fishes.2 <- fishes %>%
 # make the barplot
 fish.guide <- ggplot(fishes.2, aes("", biomass))+
   geom_bar(stat = "identity", width = 1, fill = "black")+ #plot a bar chart
-  geom_errorbar(aes(ymin = biomass - 30, ymax = biomass+sd), width = .1)+
+  geom_errorbar(aes(ymin = biomass - 30, ymax = biomass+2*se), width = .1)+
   scale_y_continuous(breaks = c(0, 1000, 2000), limits = c(0,2000))+
   scale_x_discrete(expand = c(0.28, 0.28)) +
   labs(title = "Fish kg/ha", x = "", y = "")+
